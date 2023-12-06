@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1026279317012",
+    "project_id": "social-spin-ca42e",
+    "storage_bucket": "social-spin-ca42e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026279317012:android:54764454748518a7541101",
+        "android_client_info": {
+          "package_name": "com.example.socialspin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmYt9NjzDHcWcLa93LeEnqfsBzaSjGj-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

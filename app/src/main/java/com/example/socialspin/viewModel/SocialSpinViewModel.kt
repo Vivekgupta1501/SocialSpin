@@ -1,16 +1,53 @@
 package com.example.socialspin.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.socialspin.model.User
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+
 class SocialSpinViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(User())
     val uiState :StateFlow<User> = _uiState.asStateFlow()
+    private lateinit var auth : FirebaseAuth
 
+    fun signIn(email: String,password: String)
+    {
+        auth =Firebase.auth
+        auth.createUserWithEmailAndPassword(email,password)
+            .addOnCompleteListener {task->
+                if(task.isSuccessful)
+                {
+                    Log.d("USER","User created successfuly")
+                    val userCurrent  =auth.currentUser
+                }
+                else
+                {
+                    Log.w("USER","User creation failed")
+                }
+            }
+    }
+    fun logIn(email: String,password: String)
+    {
+        auth = Firebase.auth
+        auth.signInWithEmailAndPassword(email,password)
+            .addOnCompleteListener { task->
+                if(task.isSuccessful)
+                {
+                    Log.d("USER","User LogedIn successFully")
+                }
+                else
+                {
+                    Log.w("USER","User failed to login")
+                }
+            }
+    }
     fun toLoginScreen() {
         _uiState.update {
             it.copy(

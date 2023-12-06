@@ -114,7 +114,7 @@ fun LoginScreen(
                     .padding(start = 20.dp, bottom = 10.dp, end = 20.dp, top = 10.dp)
             )
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { viewModel.logIn(user.email,user.password) },
                 modifier= Modifier.fillMaxWidth()
                     .padding(start = 20.dp,end = 20.dp,top = 10.dp, bottom = 10.dp)
             )

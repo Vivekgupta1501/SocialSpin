@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -78,7 +79,7 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     implementation("io.coil-kt:coil-compose:2.2.2")
