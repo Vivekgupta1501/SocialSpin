@@ -23,12 +23,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.example.socialspin.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier)
+fun SignInScreen(modifier : Modifier = Modifier)
 {
     var email:String = ""
     var password: String  = ""
@@ -41,7 +40,7 @@ fun LoginScreen(modifier: Modifier = Modifier)
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-            ) {
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo of the app",
@@ -52,12 +51,12 @@ fun LoginScreen(modifier: Modifier = Modifier)
                 onValueChange = {email = it},
                 label = {
                     Text(text = stringResource(id = R.string.email))
-                    },
+                },
                 leadingIcon ={
                     Image(
                         painter = painterResource(id = R.drawable.baseline_email_24),
                         contentDescription = "Entre the email"
-                        )
+                    )
                 },
                 trailingIcon ={
                     if(!email.toString().isEmpty())
@@ -67,7 +66,7 @@ fun LoginScreen(modifier: Modifier = Modifier)
                                 Icons.Default.Clear,
                                 contentDescription = "erase the email"
                             )
-                            
+
                         }
                     }
                 },
@@ -75,7 +74,8 @@ fun LoginScreen(modifier: Modifier = Modifier)
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(start = 20.dp, bottom = 10.dp, end = 20.dp, top = 10.dp)
-                )
+            )
+
             OutlinedTextField(
                 value = password,
                 onValueChange = {password = it},
@@ -91,7 +91,37 @@ fun LoginScreen(modifier: Modifier = Modifier)
                 trailingIcon ={
                     if(!password.toString().isEmpty())
                     {
-                        IconButton(onClick = { email = "" }) {
+                        IconButton(onClick = { password = "" }) {
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = "erase the email"
+                            )
+
+                        }
+                    }
+                },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, bottom = 10.dp, end = 20.dp, top = 10.dp)
+            )
+            OutlinedTextField(
+                value = password,
+                onValueChange = {password = it},
+                label = {
+                    Text(text = stringResource(id = R.string.confirm_password))
+                },
+                leadingIcon ={
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_lock_24),
+                        contentDescription = "Entre the email"
+                    )
+                },
+                trailingIcon ={
+                    if(!password.toString().isEmpty())
+                    {
+                        IconButton(onClick = { password = "" }) {
                             Icon(
                                 Icons.Default.Clear,
                                 contentDescription = "erase the email"
@@ -108,8 +138,9 @@ fun LoginScreen(modifier: Modifier = Modifier)
             )
             Button(
                 onClick = { /*TODO*/ },
-                modifier= Modifier.fillMaxWidth()
-                    .padding(start = 20.dp,end = 20.dp,top = 10.dp, bottom = 10.dp)
+                modifier= Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 10.dp)
             )
             {
                 Text(text = stringResource(id = R.string.login))
@@ -117,10 +148,9 @@ fun LoginScreen(modifier: Modifier = Modifier)
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview()
+fun SignInScreenPreview()
 {
-    LoginScreen()
+SignInScreen()
 }
