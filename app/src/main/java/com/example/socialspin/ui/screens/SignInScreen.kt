@@ -1,6 +1,7 @@
 package com.example.socialspin.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,17 +21,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.socialspin.R
+import com.example.socialspin.model.User
+import com.example.socialspin.viewModel.SocialSpinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(modifier : Modifier = Modifier)
+fun SignInScreen(
+    viewModel : SocialSpinViewModel,
+    user :User,
+    modifier : Modifier = Modifier
+)
 {
-    var email:String = ""
-    var password: String  = ""
+
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,8 +54,8 @@ fun SignInScreen(modifier : Modifier = Modifier)
                 modifier =Modifier.size(124.dp)
             )
             OutlinedTextField(
-                value = email,
-                onValueChange = {email = it},
+                value = user.email,
+                onValueChange = {viewModel.updateEmail(it)},
                 label = {
                     Text(text = stringResource(id = R.string.email))
                 },
@@ -59,9 +66,9 @@ fun SignInScreen(modifier : Modifier = Modifier)
                     )
                 },
                 trailingIcon ={
-                    if(!email.toString().isEmpty())
+                    if(!user.email.isEmpty())
                     {
-                        IconButton(onClick = { email = "" }) {
+                        IconButton(onClick = { viewModel.clearEmail() }) {
                             Icon(
                                 Icons.Default.Clear,
                                 contentDescription = "erase the email"
@@ -77,8 +84,8 @@ fun SignInScreen(modifier : Modifier = Modifier)
             )
 
             OutlinedTextField(
-                value = password,
-                onValueChange = {password = it},
+                value = user.password,
+                onValueChange = {viewModel.updatePassword(it)},
                 label = {
                     Text(text = stringResource(id = R.string.password))
                 },
@@ -89,12 +96,12 @@ fun SignInScreen(modifier : Modifier = Modifier)
                     )
                 },
                 trailingIcon ={
-                    if(!password.toString().isEmpty())
+                    if(!user.password.isEmpty())
                     {
-                        IconButton(onClick = { password = "" }) {
+                        IconButton(onClick = { viewModel.clearPassword() }) {
                             Icon(
                                 Icons.Default.Clear,
-                                contentDescription = "erase the email"
+                                contentDescription = "erase the password"
                             )
 
                         }
@@ -107,8 +114,8 @@ fun SignInScreen(modifier : Modifier = Modifier)
                     .padding(start = 20.dp, bottom = 10.dp, end = 20.dp, top = 10.dp)
             )
             OutlinedTextField(
-                value = password,
-                onValueChange = {password = it},
+                value = user.confirmPassword,
+                onValueChange = {viewModel.updateConfirmPassword(it)},
                 label = {
                     Text(text = stringResource(id = R.string.confirm_password))
                 },
@@ -119,9 +126,9 @@ fun SignInScreen(modifier : Modifier = Modifier)
                     )
                 },
                 trailingIcon ={
-                    if(!password.toString().isEmpty())
+                    if(!user.confirmPassword.isEmpty())
                     {
-                        IconButton(onClick = { password = "" }) {
+                        IconButton(onClick = { viewModel.clearConfirmPassword() }) {
                             Icon(
                                 Icons.Default.Clear,
                                 contentDescription = "erase the email"
@@ -143,8 +150,13 @@ fun SignInScreen(modifier : Modifier = Modifier)
                     .padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 10.dp)
             )
             {
-                Text(text = stringResource(id = R.string.login))
+                Text(text = stringResource(id = R.string.signin))
             }
+            Text(text = "Already Registered")
+            Text(text = "Login", fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
+                viewModel.toLoginScreen()
+            }
+            )
         }
     }
 }
@@ -152,5 +164,5 @@ fun SignInScreen(modifier : Modifier = Modifier)
 @Composable
 fun SignInScreenPreview()
 {
-SignInScreen()
+SignInScreen(SocialSpinViewModel(),User())
 }

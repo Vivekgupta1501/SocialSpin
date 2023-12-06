@@ -8,12 +8,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.socialspin.ui.screens.LoginScreen
+import com.example.socialspin.ui.screens.SignInScreen
 import com.example.socialspin.ui.theme.SocialSpinTheme
+import com.example.socialspin.viewModel.SocialSpinViewModel
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -23,7 +28,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    val viewModel :SocialSpinViewModel = viewModel()
+                    val user  =viewModel.uiState.collectAsState().value
+                    if(user.isShowingLoginPage)
+                    {
+                        LoginScreen(viewModel = viewModel, user = user)
+                    }
+                    else
+                    {
+                        SignInScreen(viewModel = viewModel, user = user)
+                    }
+
                 }
             }
         }
