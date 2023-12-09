@@ -15,11 +15,9 @@ import kotlinx.coroutines.flow.update
 class SocialSpinViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(User())
     val uiState :StateFlow<User> = _uiState.asStateFlow()
-    private lateinit var auth : FirebaseAuth
-
+    val auth = firebaseauth.getAuth()
     fun signIn(email: String,password: String)
     {
-        auth =Firebase.auth
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {task->
                 if(task.isSuccessful)
@@ -33,9 +31,29 @@ class SocialSpinViewModel: ViewModel() {
                 }
             }
     }
+    fun getFireBaseAuth() :FirebaseAuth
+    {
+        return auth
+    }
+    fun userLoggedInStatus(): Boolean
+    {
+        if(auth.currentUser!=null)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
+    fun signOutUser()
+    {
+        auth.signOut()
+    }
     fun logIn(email: String,password: String)
     {
-        auth = Firebase.auth
+        //auth = Firebase.auth
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener { task->
                 if(task.isSuccessful)
@@ -48,20 +66,7 @@ class SocialSpinViewModel: ViewModel() {
                 }
             }
     }
-    fun toLoginScreen() {
-        _uiState.update {
-            it.copy(
-                isShowingLoginPage = true
-            )
-        }
-    }
-    fun toSignInScreen() {
-        _uiState.update {
-            it.copy(
-                isShowingLoginPage = false
-            )
-        }
-    }
+
     fun updateEmail(inputString: String)
     {
         _uiState.update {
@@ -111,3 +116,13 @@ class SocialSpinViewModel: ViewModel() {
         }
     }
  }
+object firebaseauth{
+    private lateinit var auth : FirebaseAuth
+    init {
+        auth = Firebase.auth
+    }
+    fun getAuth(): FirebaseAuth
+    {
+        return auth
+    }
+}

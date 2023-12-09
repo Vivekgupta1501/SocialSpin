@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.socialspin.ui.screens.LoginScreen
 import com.example.socialspin.ui.screens.SignInScreen
 import com.example.socialspin.ui.theme.SocialSpinTheme
+import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -28,16 +29,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     val viewModel :SocialSpinViewModel = viewModel()
                     val user  =viewModel.uiState.collectAsState().value
-                    if(user.isShowingLoginPage)
+
+                   val screenViewModel :ScreenViewModel = viewModel()
+                    val screen = screenViewModel.uiState.collectAsState().value
+
+                    if(screen.isUserLoggedIn)
                     {
-                        LoginScreen(viewModel = viewModel, user = user)
+                        MainScreen(viewModel = viewModel,screenViewModel = screenViewModel)
                     }
-                    else
+                    else if(!screen.isUserLoggedIn && screen.isShowingLoginScreen)
                     {
-                        SignInScreen(viewModel = viewModel, user = user)
+                        LoginScreen(viewModel = viewModel, user = user, screenViewModel = screenViewModel, screen = screen)
                     }
+                    else if(!screen.isUserLoggedIn && !screen.isShowingLoginScreen)
+                    {
+                        SignInScreen(viewModel = viewModel, user = user, screenViewModel = screenViewModel)
+                    }
+                    //MainScreen(viewModel = viewModel,screenViewModel = screenViewModel)
 
                 }
             }

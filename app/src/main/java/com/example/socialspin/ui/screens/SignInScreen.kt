@@ -28,12 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.socialspin.R
 import com.example.socialspin.model.User
+import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     viewModel : SocialSpinViewModel,
+    screenViewModel: ScreenViewModel,
     user :User,
     modifier : Modifier = Modifier
 )
@@ -158,7 +160,7 @@ fun SignInScreen(
             }
             Text(text = "Already Registered")
             Text(text = "Login", fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
-                viewModel.toLoginScreen()
+                screenViewModel.toLoginScreen()
             }
             )
         }
@@ -168,5 +170,5 @@ fun SignInScreen(
 @Composable
 fun SignInScreenPreview()
 {
-SignInScreen(SocialSpinViewModel(),User())
+SignInScreen(SocialSpinViewModel(),ScreenViewModel(),User())
 }

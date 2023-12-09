@@ -27,13 +27,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.example.socialspin.R
+import com.example.socialspin.model.Screen
 import com.example.socialspin.model.User
+import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     viewModel: SocialSpinViewModel,
+    screenViewModel: ScreenViewModel,
+    screen:Screen,
     user  :User,
     modifier: Modifier = Modifier
 )
@@ -114,7 +118,13 @@ fun LoginScreen(
                     .padding(start = 20.dp, bottom = 10.dp, end = 20.dp, top = 10.dp)
             )
             Button(
-                onClick = { viewModel.logIn(user.email,user.password) },
+                onClick = {
+                    viewModel.logIn(user.email,user.password)
+                    if(screenViewModel.userLogedInStatus())
+                    {
+                        screenViewModel.toHomeScreen()
+                    }
+                          },
                 modifier= Modifier.fillMaxWidth()
                     .padding(start = 20.dp,end = 20.dp,top = 10.dp, bottom = 10.dp)
             )
@@ -123,7 +133,7 @@ fun LoginScreen(
             }
             Text(text = "Not Registered Yet!")
             Text(text = "Register", fontStyle = FontStyle.Italic, modifier = Modifier.clickable {
-                viewModel.toSignInScreen()
+               screenViewModel.toRegisterScreen()
             })
 
         }
@@ -134,5 +144,5 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPreview()
 {
-    LoginScreen(SocialSpinViewModel(),User())
+    LoginScreen(SocialSpinViewModel(), ScreenViewModel(),Screen(),User())
 }
