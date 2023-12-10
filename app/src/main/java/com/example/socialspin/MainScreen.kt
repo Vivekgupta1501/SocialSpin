@@ -35,6 +35,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.socialspin.model.User
 import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
 
@@ -43,13 +44,20 @@ import com.example.socialspin.viewModel.SocialSpinViewModel
 fun MainScreen(
     viewModel: SocialSpinViewModel,
     screenViewModel: ScreenViewModel,
+    user:User
 )
 {
     val navController  = rememberNavController()
     Scaffold(
         bottomBar = { BottomBar(navController = navController)}
     ) {innerPadding ->
-        BottomNavGraph(navController = navController,Modifier.padding(innerPadding), viewModel = viewModel, screenViewModel = screenViewModel)
+        BottomNavGraph(
+            navController = navController,
+            Modifier.padding(innerPadding),
+            viewModel = viewModel,
+            screenViewModel = screenViewModel,
+            user = user
+        )
     }
 }
 @Composable
@@ -149,6 +157,7 @@ fun RowScope.AddItem(
 @Composable
 fun MainScreenPreview() {
     MainScreen(viewModel = SocialSpinViewModel(),
-        screenViewModel = ScreenViewModel()
+        screenViewModel = ScreenViewModel(),
+        User()
     )
 }

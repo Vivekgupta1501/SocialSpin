@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
                     if(screen.isUserLoggedIn)
                     {
-                        MainScreen(viewModel = viewModel,screenViewModel = screenViewModel)
+                        MainScreen(viewModel = viewModel,screenViewModel = screenViewModel,user = user)
                     }
                     else if(!screen.isUserLoggedIn && screen.isShowingLoginScreen)
                     {
@@ -48,26 +48,12 @@ class MainActivity : ComponentActivity() {
                     {
                         SignInScreen(viewModel = viewModel, user = user, screenViewModel = screenViewModel)
                     }
-                    //MainScreen(viewModel = viewModel,screenViewModel = screenViewModel)
 
+                    //MainScreen(viewModel = viewModel,screenViewModel = screenViewModel)
+                    //SignInScreen(viewModel = viewModel, user = user, screenViewModel = screenViewModel)
+                   // LoginScreen(viewModel = viewModel, user = user, screenViewModel = screenViewModel, screen = screen)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SocialSpinTheme {
-        Greeting("Android")
     }
 }

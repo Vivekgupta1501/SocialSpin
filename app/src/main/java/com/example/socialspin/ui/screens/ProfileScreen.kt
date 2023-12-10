@@ -10,21 +10,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.socialspin.model.User
 import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
 
 @Composable
 fun ProfileScreen(
     viewModel: SocialSpinViewModel,
+    user: User,
     screenViewModel: ScreenViewModel
 )
 {
+    viewModel.getUserdata()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "PROFILE SCREEN")
+
+        Text(text = user.name.toString()+"the name should be here")
         Button(onClick = {
             viewModel.signOutUser()
             if(!screenViewModel.userLogedInStatus())
@@ -43,5 +47,5 @@ fun ProfileScreen(
 @Composable
 fun ProfileScreenPreview()
 {
-    ProfileScreen(SocialSpinViewModel(),ScreenViewModel())
+    ProfileScreen(SocialSpinViewModel(), screenViewModel = ScreenViewModel(), user = User())
 }
