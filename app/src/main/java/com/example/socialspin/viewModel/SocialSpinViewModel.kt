@@ -3,6 +3,7 @@ package com.example.socialspin.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.socialspin.model.User
+import com.google.common.collect.Maps
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.getField
 import com.google.firebase.firestore.toObject
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +23,8 @@ class SocialSpinViewModel: ViewModel() {
     val uiState :StateFlow<User> = _uiState.asStateFlow()
     val auth = firebaseauth.getAuth()
     val db  =Firebase.firestore
+
+
     fun signIn(email: String,password: String)
     {
         auth.createUserWithEmailAndPassword(email,password)
@@ -72,16 +76,20 @@ class SocialSpinViewModel: ViewModel() {
     }
     fun getUserdata()
     {
+       var userDetails: Map<String, String>
        // var userDetails: User =User()
         val docref = db.collection("Users").document(auth.currentUser?.uid.toString())
         docref.get()
             .addOnCompleteListener {task->
                 if(task.isSuccessful)
                 {
+                    val document = task.result
                     Log.d("USER","User data retrived ${task.result.data}")
-                    val user = task.result.data?.get("name")
-                    Log.d("USER","name is "+user?.name)
-                    //return userDetails
+                    //val user = task.result.data?.get("value") as? String
+                    //var user :String = document.getLong("name").toString()
+                    userDetails  = document.data?.get("value") as Map<String,String>
+                    updateUser(userDetails)
+
                 }
                 else
                 {
@@ -90,14 +98,14 @@ class SocialSpinViewModel: ViewModel() {
             }
 
     }
-    fun updateUser(user:DocumentSnapshot)
-    {
 
+    fun updateUser(userDetails: Map<String,String>)
+    {
         _uiState.update {
             it.copy(
-                name = user.getString("name").toString(),
-                age = user.getString("age").toString(),
-                email= user.getString("email").toString()
+                name = userDetails.get("name")!!,
+                age = userDetails.get("age")!!
+
             )
         }
     }

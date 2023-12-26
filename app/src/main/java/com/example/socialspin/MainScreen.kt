@@ -118,7 +118,8 @@ fun RowScope.AddItem(
                 launchSingleTop = true
             }
 
-        }
+        },
+        alwaysShowLabel = false
 
     )
     /*
