@@ -1,5 +1,6 @@
 package com.example.socialspin.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import com.example.socialspin.model.Screen
 import com.example.socialspin.model.User
 import com.example.socialspin.viewModel.ScreenViewModel
 import com.example.socialspin.viewModel.SocialSpinViewModel
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,11 +121,21 @@ fun LoginScreen(
             )
             Button(
                 onClick = {
-                    viewModel.logIn(user.email,user.password)
-                    if(screenViewModel.userLogedInStatus())
-                    {
-                        screenViewModel.toHomeScreen()
+                    runBlocking {
+                        viewModel.logIn(user.email,user.password,{
+                            Log.d("USER","checked status")
+                            if(screenViewModel.userLogedInStatus())
+                            {
+                                screenViewModel.toHomeScreen()
+                            }
+                        })
+
+
+
                     }
+
+
+
                           },
                 modifier= Modifier.fillMaxWidth()
                     .padding(start = 20.dp,end = 20.dp,top = 10.dp, bottom = 10.dp)
@@ -139,6 +151,7 @@ fun LoginScreen(
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

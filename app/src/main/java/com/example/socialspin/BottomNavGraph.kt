@@ -21,10 +21,10 @@ fun BottomNavGraph(
 ) {
     NavHost(navController = navController, startDestination = BottomBarScreen.Home.route,modifier) {
         composable(route = BottomBarScreen.Home.route){
-            HomeScreen()
+            HomeScreen(viewModel)
         }
         composable(route = BottomBarScreen.Post.route){
-            PostScreen()
+            PostScreen(viewModel = viewModel, user = user)
         }
         composable(route = BottomBarScreen.Profile.route){
             ProfileScreen(viewModel = viewModel, screenViewModel = screenViewModel, user = user)

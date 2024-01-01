@@ -215,7 +215,14 @@ fun SignInScreen(
             Button(
                 onClick = {
                     Log.d("USER","Button CLicked")
-                    viewModel.signIn(user.email,user.password)
+                    viewModel.signIn(user.email,user.password,{
+                        if(screenViewModel.userLogedInStatus())
+                        {
+                            screenViewModel.toHomeScreen()
+                        }
+
+                    }
+                        )
                           },
                 modifier= Modifier
                     .fillMaxWidth()

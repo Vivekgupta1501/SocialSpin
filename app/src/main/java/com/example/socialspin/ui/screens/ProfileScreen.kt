@@ -34,7 +34,6 @@ fun ProfileScreen(
     screenViewModel: ScreenViewModel
 )
 {
-    viewModel.getUserdata()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
